@@ -1,0 +1,166 @@
+https://search.google.com/structured-data/testing-tool
+https://docs.google.com/spreadsheets/d/1Ed6RmI01rx4UdW40ciWgz2oS_Kx37_-sPi7sba_jC3w/edit#gid=0
+https://developers.google.com/search/docs/guides/intro-structured-data
+{"companyInformation":{"companyName":"Walt Jr.'s Jewelry","companyLegalName":"Walter Junior's Jewelry Store Corp.","alternativeName":"Walt Jr.","description":"We were selling crystals before it was popular!","websiteUrl":"http:\/\/www.waltjrjewelry.com","companyFacebook":"https:\/\/facebook.com\/WaltJrJewelry","companyTwitter":"https:\/\/twitter.com\/WaltJrJewelry","companyYoutube":"http:\/\/youtube.com\/WaltJrJewelry","companyLinkedin":"http:\/\/linkedin.com\/in\/WaltJrJewelry","companyGooglePlus":"http:\/\/plus.google.com\/+WaltJrJewelry","logo":"1ba6894f606b7dfdb89de8cdc4d14989.jpg"},"founding":{"foundingDate":"2013-06-09","foundingStreetAddress":"Kenburn Str Regis Road","foundingLocality":"Nashville","foundingRegion":"Tennessee","foundingCountry":"United States","foundingPostalCode":"37200"},"founders":[{"founderName":"Walter White","founderTitle":"Masterchef","founderGooglePlus":"http:\/\/plus.google.com\/+WalterWhite","founderLinkedin":"http:\/\/linkedin.com\/in\/WalterWhite","founderTwitter":"https:\/\/twitter.com\/WalterWhite","founderPicture":"de21b892ebfe336f4dd627fc290ed40f.png"},{"founderName":"Junior Walter","founderTitle":"Salesman","founderGooglePlus":"http:\/\/plus.google.com\/+JuniorWalter","founderLinkedin":"http:\/\/linkedin.com\/in\/JuniorWalter","founderTwitter":"https:\/\/twitter.com\/JuniorWalter","founderPicture":"2f1800ebe9db78204fd80f5f9d6f0138.jpg"}],"locations":{"useInternalStoreInfo":false,"locStreetAddress":"Sunset Blv","locLocality":"Cactusland","locRegion":"Arizona","locCountry":"Great Britain","locPostalCode":"44949"},"contactPoints":[{"contactPointsTel":"+1-541-754-3010","contactPointsEmail":"customer@waltjr.com","contactPointsUrl":"","contactPointsType":"customer support","useActiveCountries":false,"contactPointsCountries":["24","17","21"],"useActiveLanguages":true},{"contactPointsTel":"+1-541-754-4444","contactPointsEmail":"sales@waltjr.com","contactPointsUrl":"waltjr.com","contactPointsType":"sales","useActiveCountries":true,"useActiveLanguages":false,"contactPointsLanguages":["1"]}]}
+
+{
+    "@context":"http://schema.org",
+    "@type":"Organization",
+    "name":"[COMMON NAME OF COMPANY]",
+    "legalName":"[LEGAL NAME OF COMAPNY]",
+    "url":"https://search.google.com",
+    "alternateName":"[ANY AKA NAMES]",
+    "description":"",
+    "image":"[GOOD QUALITY ONSITE LOGO]",
+    "foundingDate":"[YYYY]", //MUST BE IN ISO 8601 FORMAT
+    "foundingLocation":{
+        "@type":"Place",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Unit 42, Land of Bargains Shopping Paradise, 12 Highway 101",
+          "addressLocality": "Boston",
+          "addressRegion": "MA",
+          "addressCountry": "USA",
+          "postalCode": "89123"
+        }
+    },
+    "founders":[{
+            "@type":"Person",
+            "name":"[NAME OF FOUNDER #1]",
+            "jobTitle":"Founder",
+            "image":"asd.png",
+            "sameAs":[
+                "[URL OF SOCIAL PROFILE #1 (twitter)]"
+            ]
+        },
+        {
+            "@type":"Person",
+            "name":"[NAME OF FOUNDER #2]",
+            "jobTitle":"Founder",
+            "image":"asd.png",
+            "sameAs":[
+                "[URL OF SOCIAL PROFILE #2 (twitter)]"
+            ]
+        }
+    ],
+    "address":{
+        "@type":"PostalAddress",
+        "streetAddress":"[FIRST LINE OF ADDRESS]",
+        "addressLocality":"[TOWN/CITY]",
+        "addressRegion":"[STATE/COUNTRY]",
+        "addressCountry":"[COUNTRY CODE]", //MUST BE IN ISO 3166-1 ALPHA 2 FORMAT
+        "postalCode":"[POSTCODE]"
+    },
+    "contactPoint":{
+        "@type":"ContactPoint",
+        "contactType":"sales", //LIMITED TO THE FOLLOWING:"customer support", "technical support", "billing support", "bill payment", "sales", "reservations", "credit card support", "emergency", "baggage tracking", "roadside assistance", "package tracking"
+        "telephone":"+905435434343",
+        "email":"[EMAIL ADDRESS]",
+        "url":"http://makeupaddict.me"
+    },
+    "sameAs":[
+        "[URL OF WIKIPEDIA ARTICLE]",
+        "[URL OF SOCIAL PROFILE #1]",
+        "[URL OF SOCIAL PROFILE #2]",
+        "[URL OF SOCIAL PROFILE #3]"
+    ]
+}
+
+Array
+(
+    [companyInformation] => Array
+        (
+            [companyName] => Walt Jr.'s Jewelry
+            [companyLegalName] => Walter Junior's Jewelry Store Corp.
+            [alternativeName] => Walt Jr.
+            [description] => We were selling crystals before it was popular!
+            [websiteUrl] => http://www.waltjrjewelry.com
+            [companyFacebook] => https://facebook.com/WaltJrJewelry
+            [companyTwitter] => https://twitter.com/WaltJrJewelry
+            [companyYoutube] => http://youtube.com/WaltJrJewelry
+            [companyLinkedin] => http://linkedin.com/in/WaltJrJewelry
+            [companyGooglePlus] => http://plus.google.com/+WaltJrJewelry
+            [logo] => 1ba6894f606b7dfdb89de8cdc4d14989.jpg
+        )
+
+    [founding] => Array
+        (
+            [foundingDate] => 2013-06-09
+            [foundingStreetAddress] => Kenburn Str Regis Road
+            [foundingLocality] => Nashville
+            [foundingRegion] => Tennessee
+            [foundingCountry] => United States
+            [foundingPostalCode] => 37200
+        )
+
+    [founders] => Array
+        (
+            [0] => Array
+                (
+                    [founderName] => Walter White
+                    [founderTitle] => Masterchef
+                    [founderGooglePlus] => http://plus.google.com/+WalterWhite
+                    [founderLinkedin] => http://linkedin.com/in/WalterWhite
+                    [founderTwitter] => https://twitter.com/WalterWhite
+                    [founderPicture] => de21b892ebfe336f4dd627fc290ed40f.png
+                )
+
+            [1] => Array
+                (
+                    [founderName] => Junior Walter
+                    [founderTitle] => Salesman
+                    [founderGooglePlus] => http://plus.google.com/+JuniorWalter
+                    [founderLinkedin] => http://linkedin.com/in/JuniorWalter
+                    [founderTwitter] => https://twitter.com/JuniorWalter
+                    [founderPicture] => 2f1800ebe9db78204fd80f5f9d6f0138.jpg
+                )
+
+        )
+
+    [locations] => Array
+        (
+            [useInternalStoreInfo] =>
+            [locStreetAddress] => Sunset Blv
+            [locLocality] => Cactusland
+            [locRegion] => Arizona
+            [locCountry] => Great Britain
+            [locPostalCode] => 44949
+        )
+
+    [contactPoints] => Array
+        (
+            [0] => Array
+                (
+                    [contactPointsTel] => +1-541-754-3010
+                    [contactPointsEmail] => customer@waltjr.com
+                    [contactPointsUrl] =>
+                    [contactPointsType] => customer support
+                    [useActiveCountries] =>
+                    [contactPointsCountries] => Array
+                        (
+                            [0] => 24
+                            [1] => 17
+                            [2] => 21
+                        )
+
+                    [useActiveLanguages] => 1
+                )
+
+            [1] => Array
+                (
+                    [contactPointsTel] => +1-541-754-4444
+                    [contactPointsEmail] => sales@waltjr.com
+                    [contactPointsUrl] => waltjr.com
+                    [contactPointsType] => sales
+                    [useActiveCountries] => 1
+                    [useActiveLanguages] =>
+                    [contactPointsLanguages] => Array
+                        (
+                            [0] => 1
+                        )
+
+                )
+
+        )
+
+)

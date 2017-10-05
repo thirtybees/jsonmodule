@@ -1,0 +1,16 @@
+.jsonmodule-fieldset-header {
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.jsonmodule-fieldset-header-not-0 {
+    margin-top: 10px;
+}
+.remove-image,
+.founder-remove,
+.contact-point-remove {
+    padding-left: 6px;
+    font-size: 14px;
+    color: red;
+    cursor: pointer;
+    text-transform: lowercase;
+}
