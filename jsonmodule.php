@@ -26,19 +26,19 @@ class jsonModule extends Module
 	{
 		$this->name = 'jsonmodule';
 		$this->tab = 'front_office_features';
-		$this->version = '1.0';
-		$this->author = 'Nemo';
+		$this->version = '1.0.1';
+		$this->author = 'thirty bees';
 		$this->need_instance = 0;
-		
+
 		$this->bootstrap = true;
 
 	 	parent::__construct();
 
-		$this->displayName = $this->l('Google JSON ID');
-		$this->description = $this->l('Adds Google rich snippets in json ID format');
+		$this->displayName = $this->l('Google JSON+LD');
+		$this->description = $this->l('Adds Google rich snippets in json+LD format for richer snippets');
 		$this->confirmUninstall = $this->l('Are you sure you want to delete this module?');
 	}
-	
+
 	public function install()
 	{
 		if (!parent::install() OR
@@ -48,7 +48,7 @@ class jsonModule extends Module
 			return false;
 		return true;
 	}
-	
+
 	public function uninstall()
 	{
 		if (!parent::uninstall() OR
@@ -83,7 +83,7 @@ class jsonModule extends Module
 
 		return	$this->_html;
 	}
-	
+
 	private function _displayForm()
 	{
 		$this->_html .= $this->_generateForm();
@@ -1201,7 +1201,7 @@ class jsonModule extends Module
 
 			));
 
-			
+
 			// reviews
 			$nbReviews = 0;
 			$avgDecimal = 0;
@@ -1209,10 +1209,10 @@ class jsonModule extends Module
 			if($config['reviews']['review_type'] == 2 && $config['reviews']['yotpo_app_id'] && Module::isInstalled('yotpo'))
 			{
 				// Yotpo reviews
-				$ch = curl_init(); 
-		        curl_setopt($ch, CURLOPT_URL, 'https://api.yotpo.com/v1/widget/'.$config['reviews']['yotpo_app_id'].'/products/'.$product->id.'/reviews.json?star=5&sort[]=date&sort[]=votes_up'); 
-		        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
-		        $result = curl_exec($ch); 
+				$ch = curl_init();
+		        curl_setopt($ch, CURLOPT_URL, 'https://api.yotpo.com/v1/widget/'.$config['reviews']['yotpo_app_id'].'/products/'.$product->id.'/reviews.json?star=5&sort[]=date&sort[]=votes_up');
+		        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		        $result = curl_exec($ch);
 		        curl_close($ch);
 
 		        if($result)
@@ -1222,7 +1222,7 @@ class jsonModule extends Module
 		        {
 		        	$nbReviews = $review_result['response']['bottomline']['total_review'];
 		        	$avgDecimal = Tools::ps_round($review_result['response']['bottomline']['average_score'], 1);
-		        }				
+		        }
 			} else if ($config['reviews']['review_type'] == 1 && Module::isInstalled('productcomments'))
 			{
 
@@ -1230,7 +1230,7 @@ class jsonModule extends Module
 				$avgDecimal = ProductComment::getAverageGrade($product->id);
 				$nbReviews = (int) ProductComment::getCommentNumber($product->id);
 			}
-			
+
 
 
 
@@ -1248,7 +1248,13 @@ class jsonModule extends Module
 				$arrProduct['image'] = $image;
 			}
 			if (!empty($product->description_short)) {
-				$arrProduct['description'] = $product->description_short;
+				$arrProduct['description'] = strip_tags($product->description_short);
+			}
+			if (!empty($product->upc)) {
+				$arrProduct['sku'] = $product->upc;
+			}
+			if (!empty($product->ean13)) {
+				$arrProduct['gtin13'] = $product->ean13;
 			}
 			if (!empty($product->supplier_reference)) {
 				$arrProduct['mpn'] = $product->supplier_reference;
@@ -1266,7 +1272,7 @@ class jsonModule extends Module
 					'ratingValue' => $avgDecimal,
 				);
 			}
-			
+
 			if(!empty($product->price)) {
 				$offers = array(
 					'@type' => 'Offer',
@@ -1362,7 +1368,7 @@ class jsonModule extends Module
 
 		return $this->display(__FILE__, 'jsonmodule.tpl');
 
-		
+
 
 	}
 

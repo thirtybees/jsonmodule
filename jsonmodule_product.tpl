@@ -6,6 +6,8 @@
   "image": "{$image}",
   "description": "{$product->description_short|strip_tags}",
   "mpn": "{$product->supplier_reference}",
+  "upc":  "{$product->upc}",
+  "ean":  "{$product->ean13}",
   "brand": {
     "@type": "Thing",
     "name": "{$product->manufacturer_name}"
