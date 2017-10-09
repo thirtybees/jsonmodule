@@ -607,6 +607,7 @@ class jsonModule extends Module
                     'name' => 'name',
                 ),
             );
+
             // countries served (multi select box)
             $inputs4[] = array(
                 'type' => 'select',
@@ -656,6 +657,11 @@ class jsonModule extends Module
                 ),
             );
         }
+
+        // hardfix empty input
+        if(!$inputs4[0])
+            unset($inputs4[0]);
+
         // contact points
         $fieldsForm4 = array(
             'form' => array(
@@ -727,7 +733,7 @@ class jsonModule extends Module
             if ($logo = $this->_uploadAnyFile('logo')) {
                 $config['companyInformation']['logo'] = $logo;
             }
-            if ($config['companyInformation']['logo'] == '') {
+            if (isset($config['companyInformation']['logo']) && $config['companyInformation']['logo'] == '') {
                 $config['companyInformation']['logo'] = Tools::getValue('logo_old');
             }
             // //
