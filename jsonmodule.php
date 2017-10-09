@@ -1109,7 +1109,7 @@ class jsonModule extends Module
 			}
 		}
 		$retArr['countContactPoints'] = count($config['contactPoints']) > 0 ? count($config['contactPoints']) : 1;
-		$retArr['countLanguages'] = count($config['languages']);
+		// $retArr['countLanguages'] = count($config['languages']);
 		// //
 //		d($retArr);
 		return $retArr;
@@ -1263,6 +1263,7 @@ class jsonModule extends Module
 				$arrProduct['brand'] = array(
 					'@type' => 'Thing',
 					'name' => $product->manufacturer_name,
+					'logo' => $this->context->shop->getBaseURL() . "/img/m/$product->id_manufacturer.jpg"
 				);
 			}
 			if ($nbReviews > 0 && $avgDecimal > 0) {
@@ -1276,7 +1277,7 @@ class jsonModule extends Module
 			if(!empty($product->price)) {
 				$offers = array(
 					'@type' => 'Offer',
-					'priceCurrency' => 'USD', // TODO
+					'priceCurrency' => $this->context->currency->iso_code,
 					'price' => $product->price,
 					'itemCondition' => 'http://schema.org/NewCondition', // TODO
 					'seller' => array(
@@ -1290,7 +1291,7 @@ class jsonModule extends Module
 					$offers['availability'] = 'http://schema.org/OutOfStock';
 				}
 				if (!empty($product->specificPrice) && !empty($product->specificPrice->to)) {
-					$offers['priceValidUntil'] = $product->specificPrice->to; // TODO: format date
+					$offers['priceValidUntil'] = Tools::dateFormat($product->specificPrice->to); // TODO: format date
 				}
 				$arrProduct['offers'] = $offers;
 			}
