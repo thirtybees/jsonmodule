@@ -226,6 +226,11 @@ class jsonModule extends Module
             'label' => $this->l('Google Plus Page'),
             'name' => 'companyGooglePlus',
         );
+	$inputs1_[] = array(
+	    'type' => 'text',
+	    'label' => $this->l('Instagram Page'),
+	    'name' => 'companyInstagram',
+	);
         // //
         // company information-social media
         $fieldsForm1_ = array(
@@ -900,6 +905,7 @@ class jsonModule extends Module
                 'companyYoutube',
                 'companyLinkedin',
                 'companyGooglePlus',
+		'companyInstagram',
             );
             foreach ($socialIndices as $index) {
                 if ($this->_checkVariable($companyInformation, $index)) {
