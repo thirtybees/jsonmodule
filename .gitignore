@@ -93,3 +93,4 @@ jspm_packages
 # Remove testing images
 /img/*.jpg
 /img/*.png
+!img/.gitkeep
