@@ -89,3 +89,7 @@ jspm_packages
 .node_repl_history
 
 *stripe*.zip
+
+# Remove testing images
+/img/*.jpg
+/img/*.png
