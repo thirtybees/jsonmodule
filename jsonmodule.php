@@ -44,7 +44,7 @@ class jsonModule extends Module
     {
         $this->name = 'jsonmodule';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.1';
+        $this->version = '1.0.2';
         $this->author = 'thirty bees';
         $this->need_instance = 0;
 
