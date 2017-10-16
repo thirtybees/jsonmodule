@@ -7,7 +7,7 @@ composer -o dump-autoload
 
 
 FILES+=("css/**")
-FILES+=("img/**")
+FILES+=("img/")
 FILES+=("js/**")
 FILES+=("logo.gif")
 FILES+=("logo.png")
