@@ -1,1 +1,1 @@
-The JSON module adds rich snippets to your site. This moudle decouples the rich snippets from the theme and gives them in the format that Google most prefers. 
+The JSON module adds rich snippets to your site. This moudle decouples the rich snippets from the theme and gives them in the format that Google most prefers.
