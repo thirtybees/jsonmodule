@@ -1307,9 +1307,9 @@ class jsonModule extends Module
             }
             if (!empty($product->manufacturer_name)) {
                 $arrProduct['brand'] = array(
-                    '@type' => 'Thing',
+                    '@type' => 'brand',
                     'name' => $product->manufacturer_name,
-                    'logo' => $this->context->shop->getBaseURL() . "/img/m/$product->id_manufacturer.jpg"
+                    'logo' => $this->context->shop->getBaseURL() . "img/m/$product->id_manufacturer.jpg"
                 );
             }
             if ($nbReviews > 0 && $avgDecimal > 0) {
