@@ -736,6 +736,7 @@ class jsonModule extends Module
             $config['companyInformation']['companyYoutube'] = Tools::getValue('companyYoutube');
             $config['companyInformation']['companyLinkedin'] = Tools::getValue('companyLinkedin');
             $config['companyInformation']['companyGooglePlus'] = Tools::getValue('companyGooglePlus');
+            $config['companyInformation']['companyInstagram'] = Tools::getValue('companyInstagram');
             if ($logo = $this->_uploadAnyFile('logo')) {
                 $config['companyInformation']['logo'] = $logo;
             }
