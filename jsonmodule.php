@@ -736,6 +736,7 @@ class jsonModule extends Module
             $config['companyInformation']['companyYoutube'] = Tools::getValue('companyYoutube');
             $config['companyInformation']['companyLinkedin'] = Tools::getValue('companyLinkedin');
             $config['companyInformation']['companyGooglePlus'] = Tools::getValue('companyGooglePlus');
+            $config['companyInformation']['companyInstagram'] = Tools::getValue('companyInstagram');
             if ($logo = $this->_uploadAnyFile('logo')) {
                 $config['companyInformation']['logo'] = $logo;
             }
@@ -1309,7 +1310,7 @@ class jsonModule extends Module
                 $arrProduct['brand'] = array(
                     '@type' => 'brand',
                     'name' => $product->manufacturer_name,
-                    'logo' => $this->context->shop->getBaseURL() . "img/m/$product->id_manufacturer.jpg"
+                    'logo' => $this->context->link->getBaseLink() . 'img/m/' . $product->id_manufacturer . '.jpg',
                 );
             }
             if ($nbReviews > 0 && $avgDecimal > 0) {
@@ -1324,12 +1325,13 @@ class jsonModule extends Module
                 $offers = array(
                     '@type' => 'Offer',
                     'priceCurrency' => $this->context->currency->iso_code,
-                    'price' => $product->price,
-                    'itemCondition' => 'http://schema.org/NewCondition', // TODO
+                    'price' => $product->getPrice(),
+                    'itemCondition' => 'http://schema.org/' . ucfirst(strtolower($product->condition)) . 'Condition',
                     'seller' => array(
                         '@type' => 'Organization',
                         'name' => Configuration::get('PS_SHOP_NAME'),
                     ),
+					'url' => $product->getLink(),
                 );
                 if (!empty($product->quantity) && $product->quantity > 0) {
                     $offers['availability'] = 'http://schema.org/InStock';
@@ -1365,47 +1367,6 @@ class jsonModule extends Module
         }
 
         $this->context->smarty->assign($to_assign);
-
-        /*
-
-        $site_url = $this->context->link->getPageLink('index');
-
-        $needed_fields = [
-        'PS_SHOP_NAME',
-        'PS_SHOP_EMAIL',
-        'PS_SHOP_ADDR1',
-        'PS_SHOP_ADDR2',
-        'PS_SHOP_CODE',
-        'PS_SHOP_CITY',
-        'PS_SHOP_COUNTRY_ID',
-        'PS_SHOP_STATE_ID',
-        'PS_SHOP_PHONE'
-        ];
-        $config = Configuration::getMultiple($needed_fields);
-
-        $this->context->smarty->assign($config);
-
-        if($config['PS_SHOP_COUNTRY_ID'])
-        {
-            $country = new Country($config['PS_SHOP_COUNTRY_ID']);
-            $this->context->smarty->assign(array(
-                'country_iso' => $country->iso_code
-            ));
-        }
-        if($config['PS_SHOP_STATE_ID'])
-        {
-            $state = new State($config['PS_SHOP_STATE_ID']);
-            $this->context->smarty->assign(array(
-                'state_iso' => $state->iso_code
-            ));
-        }
-
-        $this->context->smarty->assign(array(
-            'logo'=> $this->context->link->getMediaLink(_PS_IMG_.Configuration::get('PS_LOGO_MOBILE').'?'.Configuration::get('PS_IMG_UPDATE_TIME')),
-            'site_url' => $this->context->link->getPageLink('index')
-        ));
-
-        */
 
 
         $this->context->smarty->assign(array(
