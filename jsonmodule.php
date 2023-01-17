@@ -492,9 +492,11 @@ class jsonModule extends Module
      */
     private function _checkVariable($arr, $var)
     {
-        if ($value = $arr[$var]) {
-            if (!empty($value)) {
-                return true;
+        if (array_key_exists($var, $arr)) {
+            if ($value = $arr[$var]) {
+                if (! empty($value)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -519,8 +521,6 @@ class jsonModule extends Module
      */
     private function _generateForm()
     {
-
-
         $fields = [];
         $fieldsValue = $this->_getConfig();
 
@@ -860,7 +860,7 @@ class jsonModule extends Module
         // input group 3
         $inputs3 = [];
         // use internal store finder information (checkbox, if checked gray out the rest of the fields in this group)
-        if ($fieldsValue['useInternalStoreInfo']) {
+        if (isset($fieldsValue['useInternalStoreInfo']) && $fieldsValue['useInternalStoreInfo']) {
             $inputs3[] = [
                 'type' => 'hidden',
                 'name' => 'use-internal-store-info-value',
@@ -993,7 +993,7 @@ class jsonModule extends Module
             ];
             // use active countries (checkbox)
             $countriesCbClass = 'contact-point-field-' . $i;
-            if (!$fieldsValue['useActiveCountries_' . $i]) {
+            if (! isset($fieldsValue['useActiveCountries_' . $i]) || !$fieldsValue['useActiveCountries_' . $i]) {
                 $countriesCbClass = 'off ' . $countriesCbClass;
             }
             $inputs4[] = [
@@ -1118,38 +1118,95 @@ class jsonModule extends Module
     private function _getConfig()
     {
         $config = json_decode(Configuration::get(static::JSONMODULE_CONFIG), true);
+
         // rebuild the configuration array tree
-        $retArr = [];
-        $simpleArrays = array_merge($config['companyInformation'], $config['founding'], $config['locations'],
-            $config['reviews']);
-        foreach ($simpleArrays as $key => $value) {
-            $retArr[$key] = $value;
-            if ($key == 'logo') {
-                $retArr[$key . '_old'] = $value;
+        $retArr = [
+            'companyName' => '',
+            'companyLegalName' => '',
+            'alternativeName' => '',
+            'description' => '',
+            'websiteUrl' => '',
+            'logo' => '',
+            'logo_old' => '',
+            'companyFacebook' => '',
+            'companyTwitter' => '',
+            'companyYoutube' => '',
+            'companyGooglePlus' => '',
+            'companyInstagram' => '',
+            'companyLinkedin' => '',
+            'review_type' => '',
+            'yotpo_app_id' => '',
+            'foundingDate' => '',
+            'foundingStreetAddress' => '',
+            'foundingLocality' => '',
+            'foundingRegion' => '',
+            'foundingCountry' => '',
+            'foundingPostalCode' => '',
+            'locStreetAddress' => '',
+            'locLocality' => '',
+            'locRegion' => '',
+            'locCountry' => '',
+            'locPostalCode' => '',
+            'countFounders' => 1,
+            'countContactPoints' => 1,
+            'useActiveLanguages_0' => false,
+            'founderName_0' => '',
+            'founderTitle_0' => '',
+            'founderGooglePlus_0' => '',
+            'founderLinkedin_0' => '',
+            'founderTwitter_0' => '',
+            'contactPointsTel_0' => '',
+            'contactPointsEmail_0' => '',
+            'contactPointsUrl_0' => '',
+            'contactPointsType_0' => '',
+            'contactPointsCountries_0[]' => [],
+            'contactPointsLanguages_0[]' => [],
+
+        ];
+
+        foreach (['companyInformation', 'founding', 'locations', 'reviews'] as $configKey) {
+            if (isset($config[$configKey]) && is_array($config[$configKey])) {
+                foreach ($config[$configKey] as $key => $value) {
+                    $retArr[$key] = $value;
+                    if ($key == 'logo') {
+                        $retArr[$key . '_old'] = $value;
+                    }
+                }
             }
         }
+
         // founders
-        for ($i = 0; $i < count($config['founders']); $i++) {
-            $founder = $config['founders'][$i];
-            foreach (array_keys($founder) as $key) {
-                $retArr[$key . '_' . $i] = $founder[$key];
-                if ($key == 'founderPicture') {
-                    $retArr[$key . '_' . $i . '_old'] = $founder[$key];
+        if (isset($config['founders']) && is_array($config['founders'])) {
+            for ($i = 0; $i < count($config['founders']); $i++) {
+                $founder = $config['founders'][$i];
+                foreach (array_keys($founder) as $key) {
+                    $retArr[$key . '_' . $i] = $founder[$key];
+                    if ($key == 'founderPicture') {
+                        $retArr[$key . '_' . $i . '_old'] = $founder[$key];
+                    }
                 }
             }
+            $retArr['countFounders'] = count($config['founders']) > 0
+                ? count($config['founders'])
+                : 1;
         }
-        $retArr['countFounders'] = count($config['founders']) > 0 ? count($config['founders']) : 1;
+
         // contact points
-        for ($i = 0; $i < count($config['contactPoints']); $i++) {
-            $contactPoint = $config['contactPoints'][$i];
-            foreach (array_keys($contactPoint) as $key) {
-                $retArr[$key . '_' . $i] = $contactPoint[$key];
-                if ($key == 'contactPointsCountries' || $key == 'contactPointsLanguages') {
-                    $retArr[$key . '_' . $i . '[]'] = $contactPoint[$key];
+        if (isset($config['contactPoints']) && is_array($config['contactPoints'])) {
+            for ($i = 0; $i < count($config['contactPoints']); $i++) {
+                $contactPoint = $config['contactPoints'][$i];
+                foreach (array_keys($contactPoint) as $key) {
+                    $retArr[$key . '_' . $i] = $contactPoint[$key];
+                    if ($key == 'contactPointsCountries' || $key == 'contactPointsLanguages') {
+                        $retArr[$key . '_' . $i . '[]'] = $contactPoint[$key];
+                    }
                 }
             }
+            $retArr['countContactPoints'] = count($config['contactPoints']) > 0
+                ? count($config['contactPoints'])
+                : 1;
         }
-        $retArr['countContactPoints'] = count($config['contactPoints']) > 0 ? count($config['contactPoints']) : 1;
+
         return $retArr;
     }
 
