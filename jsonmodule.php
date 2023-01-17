@@ -150,7 +150,6 @@ class jsonModule extends Module
             $config['companyInformation']['companyTwitter'] = Tools::getValue('companyTwitter');
             $config['companyInformation']['companyYoutube'] = Tools::getValue('companyYoutube');
             $config['companyInformation']['companyLinkedin'] = Tools::getValue('companyLinkedin');
-            $config['companyInformation']['companyGooglePlus'] = Tools::getValue('companyGooglePlus');
             if ($logo = $this->_uploadAnyFile('logo')) {
                 $config['companyInformation']['logo'] = $logo;
             }
@@ -188,7 +187,6 @@ class jsonModule extends Module
                 $founder = [
                     'founderName' => Tools::getValue('founderName_' . $i),
                     'founderTitle' => Tools::getValue('founderTitle_' . $i),
-                    'founderGooglePlus' => Tools::getValue('founderGooglePlus_' . $i),
                     'founderLinkedin' => Tools::getValue('founderLinkedin_' . $i),
                     'founderTwitter' => Tools::getValue('founderTwitter_' . $i),
                     'founderPicture' => '',
@@ -315,7 +313,6 @@ class jsonModule extends Module
                 'companyTwitter',
                 'companyYoutube',
                 'companyLinkedin',
-                'companyGooglePlus',
                 'companyInstagram',
             ];
             foreach ($socialIndices as $index) {
@@ -373,7 +370,6 @@ class jsonModule extends Module
 
                 $sameAs = [];
                 $socialIndices = [
-                    'founderGooglePlus',
                     'founderLinkedin',
                     'founderTwitter',
                 ];
@@ -603,11 +599,6 @@ class jsonModule extends Module
         ];
         $inputs1_[] = [
             'type' => 'text',
-            'label' => $this->l('Google Plus Page'),
-            'name' => 'companyGooglePlus',
-        ];
-        $inputs1_[] = [
-            'type' => 'text',
             'label' => $this->l('Instagram Page'),
             'name' => 'companyInstagram',
         ];
@@ -760,14 +751,6 @@ class jsonModule extends Module
                 'label' => $this->l('Title'),
                 'name' => 'founderTitle_' . $i,
                 'id' => 'founder_title_' . $i,
-                'class' => 'founder-field founder-field-' . $i,
-            ];
-            // google+ page (textfield)
-            $inputs2_[] = [
-                'type' => 'text',
-                'label' => $this->l('Google Plus Page'),
-                'name' => 'founderGooglePlus_' . $i,
-                'id' => 'founder_google_plus_' . $i,
                 'class' => 'founder-field founder-field-' . $i,
             ];
             // linkedin page (textfield)
@@ -1108,7 +1091,6 @@ class jsonModule extends Module
             'companyFacebook' => '',
             'companyTwitter' => '',
             'companyYoutube' => '',
-            'companyGooglePlus' => '',
             'companyInstagram' => '',
             'companyLinkedin' => '',
             'review_type' => '',
@@ -1129,7 +1111,6 @@ class jsonModule extends Module
             'useActiveLanguages_0' => false,
             'founderName_0' => '',
             'founderTitle_0' => '',
-            'founderGooglePlus_0' => '',
             'founderLinkedin_0' => '',
             'founderTwitter_0' => '',
             'contactPointsTel_0' => '',
