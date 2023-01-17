@@ -45,15 +45,6 @@ class jsonModule extends Module
     protected $_html = '';
 
     /**
-     * Default configuration values
-     *
-     * @var string[]
-     */
-    protected $_config = [
-        'jsonld_legal_name' => ''
-    ];
-
-    /**
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
@@ -82,22 +73,9 @@ class jsonModule extends Module
     public function install()
     {
         if (!parent::install() or
-            !$this->_installConfig() or
             !$this->registerHook('displayHeader')
         ) {
             return false;
-        }
-        return true;
-    }
-
-    /**
-     * @return true
-     * @throws PrestaShopException
-     */
-    private function _installConfig()
-    {
-        foreach ($this->_config as $keyname => $value) {
-            Configuration::updateValue($keyname, $value);
         }
         return true;
     }
@@ -124,9 +102,8 @@ class jsonModule extends Module
      */
     private function _eraseConfig()
     {
-        foreach ($this->_config as $keyname => $value) {
-            Configuration::deleteByName($keyname);
-        }
+        Configuration::deleteByName(static::ORGANIZATION_JSON);
+        Configuration::deleteByName(static::JSONMODULE_CONFIG);
         return true;
     }
 
@@ -1294,32 +1271,33 @@ class jsonModule extends Module
             $nbReviews = 0;
             $avgDecimal = 0;
             $review_result = [];
-            if ($config['reviews']['review_type'] == 2 && $config['reviews']['yotpo_app_id'] && Module::isInstalled('yotpo')) {
-                // Yotpo reviews
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL,
-                    'https://api.yotpo.com/v1/widget/' . $config['reviews']['yotpo_app_id'] . '/products/' . $product->id . '/reviews.json?star=5&sort[]=date&sort[]=votes_up');
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $result = curl_exec($ch);
-                curl_close($ch);
+            if (isset($config['reviews'])) {
+                if ($config['reviews']['review_type'] == 2 && $config['reviews']['yotpo_app_id'] && Module::isInstalled('yotpo')) {
+                    // Yotpo reviews
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL,
+                        'https://api.yotpo.com/v1/widget/' . $config['reviews']['yotpo_app_id'] . '/products/' . $product->id . '/reviews.json?star=5&sort[]=date&sort[]=votes_up');
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
 
-                if ($result) {
-                    $review_result = json_decode($result, true);
-                }
+                    if ($result) {
+                        $review_result = json_decode($result, true);
+                    }
 
-                if ($review_result && $review_result['status']['code'] == 200) {
-                    $nbReviews = $review_result['response']['bottomline']['total_review'];
-                    $avgDecimal = Tools::ps_round($review_result['response']['bottomline']['average_score'], 1);
-                }
-            } else {
-                if ($config['reviews']['review_type'] == 1 && Module::isInstalled('productcomments')) {
+                    if ($review_result && $review_result['status']['code'] == 200) {
+                        $nbReviews = $review_result['response']['bottomline']['total_review'];
+                        $avgDecimal = Tools::ps_round($review_result['response']['bottomline']['average_score'], 1);
+                    }
+                } else {
+                    if ($config['reviews']['review_type'] == 1 && Module::isInstalled('productcomments')) {
 
 
-                    $avgDecimal = ProductComment::getAverageGrade($product->id);
-                    $nbReviews = (int)ProductComment::getCommentNumber($product->id);
+                        $avgDecimal = ProductComment::getAverageGrade($product->id);
+                        $nbReviews = (int)ProductComment::getCommentNumber($product->id);
+                    }
                 }
             }
-
 
             $this->context->smarty->assign([
                 'isproduct' => 1
@@ -1400,11 +1378,6 @@ class jsonModule extends Module
                 'path' => $path
             ]);
         }
-
-        foreach ($this->_config as $key => $unused) {
-            $this->context->smarty->assign($key, Configuration::get($key));
-        }
-
 
         $this->context->smarty->assign([
             static::ORGANIZATION_JSON => Configuration::get(static::ORGANIZATION_JSON),
