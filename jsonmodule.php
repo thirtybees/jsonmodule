@@ -1336,8 +1336,8 @@ class jsonModule extends Module
                 } else {
                     $offers['availability'] = 'http://schema.org/OutOfStock';
                 }
-                if (!empty($product->specificPrice) && !empty($product->specificPrice->to)) {
-                    $offers['priceValidUntil'] = Tools::dateFormat($product->specificPrice->to, Context::getContext()->smarty);
+                if (!empty($product->specificPrice) && !empty($product->specificPrice['to'])) {
+                    $offers['priceValidUntil'] = date('Y-m-d', strtotime($product->specificPrice['to']));
                 }
                 $arrProduct['offers'] = $offers;
             }
