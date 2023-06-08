@@ -21,7 +21,6 @@
 /** @noinspection PhpUndefinedNamespaceInspection */
 
 use ProductCommentsModule\ProductComment;
-use ProductCommentsModule\ProductCommentCriterion;
 
 if (!defined('_TB_VERSION_')) {
     exit;
@@ -1271,9 +1270,10 @@ class jsonModule extends Module
                         $avgDecimal = Tools::ps_round($review_result['response']['bottomline']['average_score'], 1);
                     }
                 } else {
-                    if ($config['reviews']['review_type'] == 1 && Module::isInstalled('productcomments')) {
-
-
+                    if ($config['reviews']['review_type'] == 1 && Module::isEnabled('productcomments')) {
+                        if (! class_exists('ProductCommentsModule\ProductComment')) {
+                            require_once(_PS_MODULE_DIR_ . 'productcomments/productcomments.php');
+                        }
                         $avgDecimal = ProductComment::getAverageGrade($product->id);
                         $nbReviews = (int)ProductComment::getCommentNumber($product->id);
                     }
