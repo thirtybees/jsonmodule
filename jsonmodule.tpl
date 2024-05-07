@@ -3,7 +3,7 @@
 {if isset($path)}
 <script type="application/ld+json">
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "BreadcrumbList",
 	"itemListElement": [
   {foreach from=$path item=path_item name="crumbsloop"}
