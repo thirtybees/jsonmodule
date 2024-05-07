@@ -1,20 +1,20 @@
 <?php
 /**
- * Copyright (C) 2017 thirty bees
+ * Copyright (C) 2017-2024 thirty bees
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Academic Free License (AFL 3.0)
  * that is bundled with this package in the file LICENSE.md
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
+ * https://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to contact@thirtybees.com so we can send you a copy immediately.
  *
  * @author    thirty bees <contact@thirtybees.com>
- * @copyright 2017 thirty bees
- * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @copyright 2017-2024 thirty bees
+ * @license   https://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
 /** @noinspection PhpUndefinedClassInspection */
@@ -450,7 +450,7 @@ class jsonModule extends Module
         }
         if (count($json) > 0) {
 
-            $json['@context'] = 'http://schema.org';
+            $json['@context'] = 'https://schema.org';
             $json['@type'] = 'Organization';
         }
         return json_encode($json);
@@ -1325,16 +1325,16 @@ class jsonModule extends Module
                     '@type' => 'Offer',
                     'priceCurrency' => $this->context->currency->iso_code,
                     'price' => $product->getPrice(),
-                    'itemCondition' => 'http://schema.org/' . ucfirst(strtolower($product->condition)) . 'Condition',
+                    'itemCondition' => 'https://schema.org/' . ucfirst(strtolower($product->condition)) . 'Condition',
                     'seller' => [
                         '@type' => 'Organization',
                         'name' => Configuration::get('PS_SHOP_NAME'),
                     ],
                 ];
                 if (!empty($product->quantity) && $product->quantity > 0) {
-                    $offers['availability'] = 'http://schema.org/InStock';
+                    $offers['availability'] = 'https://schema.org/InStock';
                 } else {
-                    $offers['availability'] = 'http://schema.org/OutOfStock';
+                    $offers['availability'] = 'https://schema.org/OutOfStock';
                 }
                 if (!empty($product->specificPrice) && !empty($product->specificPrice['to'])) {
                     $offers['priceValidUntil'] = date('Y-m-d', strtotime($product->specificPrice['to']));
@@ -1343,7 +1343,7 @@ class jsonModule extends Module
             }
 
             if (count($arrProduct) > 0) {
-                $arrProduct['@context'] = 'http://schema.org';
+                $arrProduct['@context'] = 'https://schema.org';
                 $arrProduct['@type'] = 'Product';
             }
 
